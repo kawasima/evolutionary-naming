@@ -32,6 +32,12 @@ Match the depth of work to the user's actual story. Most naming improvements sho
 /plugin install evolutionary-naming@kawasima-skills
 ```
 
+### Via [skills.sh](https://skills.sh/)
+
+```bash
+npx skills add kawasima/evolutionary-naming
+```
+
 ### Manual install (single user)
 
 ```bash
