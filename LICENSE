@@ -1,0 +1,28 @@
+Copyright (c) 2026 kawasima
+
+This work is licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0).
+
+To view a copy of this license, visit:
+https://creativecommons.org/licenses/by/4.0/
+
+You are free to:
+- Share — copy and redistribute the material in any medium or format
+- Adapt — remix, transform, and build upon the material for any purpose,
+  even commercially.
+
+Under the following terms:
+- Attribution — You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made.
+
+---
+
+ATTRIBUTION
+
+This skill is derived from Arlo Belshee's "Naming as a Process" series,
+licensed under CC BY 3.0:
+- Original blog: https://arlobelshee.com/tag/naming-is-a-process
+- Updated edition: https://www.digdeeproots.com/articles/naming-process/
+
+Modifications: restructured as a Claude Code skill with audit and improve
+modes; added phase-boundary safety gates and TDD-derived anti-patterns.

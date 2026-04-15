@@ -1,0 +1,22 @@
+{
+  "name": "evolutionary-naming",
+  "version": "0.1.0",
+  "description": "Evolutionary naming skill — improve names step-by-step through 3 phases. Two modes: audit (exhaustive scan with phase classification) and improve (interactive single-target with phase-boundary safety gates).",
+  "author": {
+    "name": "kawasima",
+    "email": "kawasima1016@gmail.com",
+    "url": "https://github.com/kawasima"
+  },
+  "homepage": "https://github.com/kawasima/evolutionary-naming",
+  "repository": "https://github.com/kawasima/evolutionary-naming",
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "naming",
+    "refactoring",
+    "code-quality",
+    "code-review",
+    "clean-code",
+    "audit"
+  ],
+  "skills": "./skills/"
+}

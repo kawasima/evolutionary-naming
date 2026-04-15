@@ -1,0 +1,33 @@
+{
+  "name": "kawasima-skills",
+  "owner": {
+    "name": "kawasima",
+    "email": "kawasima1016@gmail.com"
+  },
+  "metadata": {
+    "description": "Personal collection of Claude Code skills by kawasima.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "evolutionary-naming",
+      "source": {
+        "source": "github",
+        "repo": "kawasima/evolutionary-naming"
+      },
+      "description": "Evolutionary naming skill — improve names step-by-step through 3 phases. Two modes: audit (exhaustive scan with phase classification) and improve (interactive single-target with phase-boundary safety gates).",
+      "version": "0.1.0",
+      "author": {
+        "name": "kawasima"
+      },
+      "homepage": "https://github.com/kawasima/evolutionary-naming",
+      "license": "CC-BY-4.0",
+      "keywords": [
+        "naming",
+        "refactoring",
+        "code-quality"
+      ],
+      "category": "refactoring"
+    }
+  ]
+}
