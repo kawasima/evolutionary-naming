@@ -6,7 +6,9 @@
 
 A Claude Code skill for **evolutionary naming** — improving names step-by-step through progressive refinement instead of trying to find the perfect name in one shot.
 
-Naming is a process, not a single step. This skill walks names through 7 progressive steps grouped into 3 phases, committing at each step, so improvements are safe, incremental, and reversible.
+Naming is a process, not a single step. This skill walks names through 7 progressive steps grouped into 3 phases, with one commit per step, so improvements are safe, incremental, and reversible.
+
+The skill is **advisory**: it reads code (Read/Grep/Glob) and proposes each rename plus the commit message you'd use — it doesn't edit files or run git. You apply the changes.
 
 ## What it does
 

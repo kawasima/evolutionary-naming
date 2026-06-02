@@ -4,17 +4,32 @@ Shared knowledge for both audit-mode and improve-mode. Diagnosis criteria, trans
 
 Based on Arlo Belshee's "Naming as a Process" (CC BY 3.0). Updated edition: digdeeproots.com.
 
+**Advisory only.** Everything here describes the move to *propose* and the commit message you'd *suggest*. The skill (Read/Grep/Glob) doesn't edit files or run git — the user applies each change. Read "rename X to Y" and "commit" below as "propose renaming X to Y, with this suggested commit message."
+
 ## Diagnosing Current Step
+
+There are 7 steps. A *misleading* name is not a separate step — it counts as **Missing** (the real name is absent; a false one occupies the slot), and it's worse than a blank, so it goes through `applesauce` first to strip the false meaning.
 
 | Signal | Current Step |
 |--------|--------------|
 | Concept exists in code but has no name (embedded in a long method/class) | Missing |
-| Name is misleading or tells nothing (`process`, `handle`, `data`, `manager`, `s`, `d`, `r`) | Missing/Misleading → treat as Nonsense candidate |
+| Name is misleading or tells nothing (`process`, `handle`, `data`, `manager`, `s`, `d`, `r`) | Missing (route via `applesauce`) |
 | Name tells one true thing but not everything (`doSomethingToDatabase`) | Honest |
 | Name lists everything but is very long (`parseXmlAndStoreAndCacheAndNotify`) | Honest and Complete |
 | Each piece has single responsibility but names describe mechanics | Does the Right Thing |
 | Names express purpose but don't form a shared vocabulary | Intent |
 | Names form a shared domain vocabulary with Value Objects | Domain Abstraction |
+
+## Depth Signals — How Far to Walk
+
+How far to propose walking a name depends on the user's story. This is the canonical table; SKILL.md and improve-mode.md both refer here.
+
+| User signal | Stop at |
+|-------------|---------|
+| "急いでる" / "bug fix" / "とりあえず" | Honest (mid Phase 1) |
+| "改善して" / generic rename | Honest and Complete (end of Phase 1) |
+| "リファクタリング" | Does the Right Thing (Phase 2) |
+| "設計から見直したい" / "ドメイン的に整理" | Intent or Domain Abstraction (Phase 3) |
 
 ## Step Transitions
 
@@ -26,8 +41,8 @@ Based on Arlo Belshee's "Naming as a Process" (CC BY 3.0). Updated edition: digd
 1. Find a chunk: a block of statements, an unclear expression, parameters that travel together.
 2. Extract it (Extract Method, Introduce Variable, Introduce Parameter Object).
 3. Name it `applesauce`. Obviously nonsense — nobody will mistake it for a real name.
-4. For misleading names (`PageLoad`, `DataManager`): rename to `applesauce` directly. Yes, even names that LOOK reasonable. `-Manager`, `-Handler`, `process()` are misleading because they promise meaning they don't deliver.
-5. **Commit immediately.** Don't batch with the next step.
+4. For misleading names (`PageLoad`, `DataManager`): propose renaming to `applesauce` directly. Yes, even names that LOOK reasonable. `-Manager`, `-Handler`, `process()` are misleading because they promise meaning they don't deliver.
+5. **Suggest committing this on its own.** Give a one-line commit message; don't batch it with the next step.
 
 Only one `applesauce` in scope at a time. If you need another, first promote the current one to Honest.
 
@@ -43,7 +58,7 @@ Only one `applesauce` in scope at a time. If you need another, first promote the
 1. Identify one true thing about what this code does.
 2. Rename to express that truth. Be specific, not generic.
 3. Mark uncertainty: `probably_` prefix for things you're not sure about, `_AndStuff` suffix for unknown remaining behavior.
-4. **Commit.**
+4. **Suggest a commit** for this step (give the message; the user applies it).
 
 ```
 // BAD: too generic
@@ -68,7 +83,7 @@ probably_doSomethingEvilToTheDatabase_AndStuff()
 → parseXmlAndStoreFlightToDatabaseAndLocalCacheAndBeginBackgroundProcessing()
 ```
 
-Long names are GOOD here. Forget naming conventions about length. Completeness is the goal. **Commit after each addition.**
+Long names are GOOD here. Forget naming conventions about length. Completeness is the goal. **Suggest a commit after each addition** — one insight per commit message.
 
 ### Honest and Complete → Does the Right Thing (Phase 2)
 
@@ -79,7 +94,7 @@ Long names are GOOD here. Forget naming conventions about length. Completeness i
 2. Extract that responsibility via structural refactoring (Extract Method, Split Class, Introduce Parameter Object).
 3. Distribute the complete name across the new pieces.
 4. Each new piece keeps an Honest and Complete name.
-5. **Commit.**
+5. **Suggest a commit** for this step (give the message; the user applies it).
 
 ```
 parseXmlAndStoreFlightToDatabaseAndLocalCacheAndBeginBackgroundProcessing()
@@ -87,6 +102,8 @@ parseXmlAndStoreFlightToDatabaseAndLocalCacheAndBeginBackgroundProcessing()
 ```
 
 **Name by "what it does", not "what it is."** This motivates splitting.
+
+Phase 1 transitions are pure renames and preserve behavior. Phase 2 and Phase 3 involve structural moves (extract, split, introduce object) that *can* change behavior. When proposing them, remind the user to run the tests after they apply each step, and to keep each step a separate commit so a failing one is easy to roll back.
 
 ### Does the Right Thing → Intent (Phase 3)
 
@@ -96,7 +113,7 @@ parseXmlAndStoreFlightToDatabaseAndLocalCacheAndBeginBackgroundProcessing()
 1. Read every place this method/class/variable is used.
 2. Understand its role in the larger orchestration.
 3. Rename from "what it does" to "why it exists" — its purpose.
-4. **Commit.**
+4. **Suggest a commit** for this step (give the message; the user applies it).
 
 ```
 storeFlightToDatabaseAndLocalCache() → beginTrackingFlight()
@@ -119,7 +136,7 @@ storeFlightToDatabaseAndLocalCache() → beginTrackingFlight()
 1. Identify the missing Value Object / Whole Value.
 2. Extract it: Introduce Parameter Object → promote to class → move related methods in.
 3. Name the new concept in domain language.
-4. **Commit.**
+4. **Suggest a commit** for this step (give the message; the user applies it).
 
 ## Universal Red Flags
 
@@ -135,9 +152,9 @@ storeFlightToDatabaseAndLocalCache() → beginTrackingFlight()
 | Variable named same as type (`GridSquare gridSquare`) | Name by what distinguishes this instance. |
 | Using CS terms (`Transformer`, `Processor`, `Handler`) at Intent level | Use domain terms the business understands. |
 
-## Why Commit at Every Step
+## Why a Commit per Step
 
-Each naming improvement makes the code strictly better. Committing locks in that gain. If the next step fails, you roll back to a better state than before. Don't batch commits. The naming process IS the commit history.
+Each naming improvement makes the code strictly better. A commit locks in that gain, so if the next step fails the user rolls back to a better state than before. So propose one commit per step, never a batch — the naming process IS the commit history. Suggest the message; the user runs the commit.
 
 ```
 rename process to applesauce
