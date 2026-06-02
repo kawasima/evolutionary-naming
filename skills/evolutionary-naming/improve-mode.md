@@ -2,18 +2,16 @@
 
 ## Purpose
 
-Take ONE identifier and walk it through the naming process, one transition at a time. Pause at phase boundaries so the user can decide whether to invest in structural changes.
+Take ONE identifier and walk it through the naming process, one transition at a time, *proposing* each move. Pause at phase boundaries so the user can decide whether to invest in structural changes.
+
+**Advisory:** you propose renames and suggest the commit message for each; you do not edit files or run git. The user applies them.
 
 ## Workflow
 
 1. **Confirm the target.** Restate which identifier you're improving. If the user named multiple, ask which one to start with.
 2. **Diagnose current step.** Use the diagnosis table in `reference.md`. State the step + one-line evidence.
-3. **Read the user's depth signal:**
-   - "急いでる" / "bug fix" / "とりあえず" → stop at Honest
-   - "改善して" / "rename" with no other context → finish Phase 1 (Honest and Complete)
-   - "リファクタリング" → Phase 1 + Phase 2 (Does the Right Thing)
-   - "設計から見直したい" / "ドメイン的に整理したい" → all phases
-4. **Walk Phase 1 continuously.** Apply transitions through Honest and Complete WITHOUT pausing for each micro-step. Phase 1 is declared safe (no structural change). Show each transition with an inline commit message.
+3. **Read the user's depth signal** to decide how far to propose walking. Use the "Depth Signals — How Far to Walk" table in `reference.md`.
+4. **Walk Phase 1 continuously.** Propose transitions through Honest and Complete WITHOUT pausing for each micro-step. Phase 1 is pure renaming (no structural change, behavior-preserving). Show each transition with the commit message the user would use.
 5. **Pause before Phase 2.** State that the next step requires structural refactoring and ask:
    > 次は構造的リファクタリング（メソッド/クラス分割）が必要です。`X`, `Y`, `Z` を切り出して進めますか?
 6. **Pause before Phase 3.** State that you need to read call sites / consider domain language and ask:
@@ -66,6 +64,7 @@ Example:
 | Use applesauce for a one-letter variable like `d` | Applesauce is for misleading names and extracted chunks. A nameless `d` can go directly to Honest. |
 | Run all 7 steps when user said "急いでる" | Honor the depth signal. Stop at Honest. |
 | Suggest a Value Object when only Phase 1 was authorized | Note the opportunity, don't do the work. |
+| Compress the `applesauce` step into commentary (esp. on handoff from audit) | Show the literal `→ applesauce` rename with its own commit message, even when the diagnosis was already done in audit. The per-step commit visibility is the point. |
 
 ## When to Defer to Audit Mode
 
