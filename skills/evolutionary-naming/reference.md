@@ -8,12 +8,16 @@ Based on Arlo Belshee's "Naming as a Process" (CC BY 3.0). Updated edition: digd
 
 ## Diagnosing Current Step
 
-There are 7 steps. A *misleading* name is not a separate step — it counts as **Missing** (the real name is absent; a false one occupies the slot), and it's worse than a blank, so it goes through `applesauce` first to strip the false meaning.
+There are 7 steps. Two situations both diagnose as **Missing** but transition differently:
+
+- A *misleading* name (`process`, `handle`, `data`, `-Manager`) promises meaning it doesn't deliver. It's worse than a blank, so route it through `applesauce` first to strip the false comfort.
+- A *single-letter placeholder* (`d`, `r`, `s`) makes no false promise — the name is simply absent. If its meaning is obvious from one line of context, it can go directly to Honest; `applesauce` is unnecessary.
 
 | Signal | Current Step |
 |--------|--------------|
 | Concept exists in code but has no name (embedded in a long method/class) | Missing |
-| Name is misleading or tells nothing (`process`, `handle`, `data`, `manager`, `s`, `d`, `r`) | Missing (route via `applesauce`) |
+| Name is misleading — promises meaning it doesn't deliver (`process`, `handle`, `data`, `manager`) | Missing (route via `applesauce`) |
+| Single-letter placeholder (`s`, `d`, `r`), meaning absent but not misleading | Missing (direct to Honest if obvious; else via `applesauce`) |
 | Name tells one true thing but not everything (`doSomethingToDatabase`) | Honest |
 | Name lists everything but is very long (`parseXmlAndStoreAndCacheAndNotify`) | Honest and Complete |
 | Each piece has single responsibility but names describe mechanics | Does the Right Thing |
