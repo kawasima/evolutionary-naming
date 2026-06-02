@@ -11,3 +11,6 @@ Thumbs.db
 
 # Local Claude Code state
 .claude/
+
+# Test-scenario run logs are throwaway dev artifacts, not tracked
+test-scenarios/*results*.md
